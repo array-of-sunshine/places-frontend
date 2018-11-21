@@ -26,10 +26,11 @@ export default {
     };
   },
   created: function() {
-    axios.get('http://localhost:3000/places').then(function(response) {
+    // axios.get('http://localhost:3000/places').then(function(response) {
+    axios.get('http://localhost:3000/places').then(response => {
       console.log(response.data);
       this.places = response.data
-    }.bind(this));
+    });
   },
   methods: {
     addPlace: function() {
@@ -38,9 +39,9 @@ export default {
         name: this.newPlace.name,
         address: this.newPlace.address
       };
-      axios.post('http://localhost:3000/places', params).then(function(response) {
+      axios.post('http://localhost:3000/places', params).then(response => {
         this.places.push(response.data);
-      }.bind(this))
+      })
     }
   },
   computed: {}

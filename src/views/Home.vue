@@ -14,6 +14,19 @@
 <style>
   body { margin:0; padding:0; }
   #map { position:absolute; top:0; bottom:0; width:100%; height: 400px; }
+
+  #marker {
+      background-image: url('https://www.mapbox.com/mapbox-gl-js/assets/washington-monument.jpg');
+      background-size: cover;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      cursor: pointer;
+  }
+
+  .mapboxgl-popup {
+      max-width: 200px;
+  }
 </style>
 
 <script>
@@ -29,14 +42,28 @@ export default {
     };
   },
   mounted: function() {
+    var monument = [-77.0353, 38.8895];
     mapboxgl.accessToken = 'pk.eyJ1IjoiYnJpYW5yZ3J2ZiIsImEiOiJjanAzYWhhNGIwZnhnM2tvYnJoZWk1YzA0In0.DDR17tYl3BvJHR2FdON2sQ';
     var map = new mapboxgl.Map({
         container: 'map', // container id
         style: 'mapbox://styles/mapbox/streets-v9', // stylesheet location
-        center: [-86.7816, 36.1627], // starting position [lng, lat]
-        zoom: 9, // starting zoom
-        pitch: 60
+        center: monument, // starting position [lng, lat]
+        zoom: 9 // starting zoom
+
     });
+
+    var popup = new mapboxgl.Popup({ offset: 25 })
+    .setText('Construction on the Washington Monument began in 1848.');
+
+    // create DOM element for the marker
+    var el = document.createElement('div');
+    el.id = 'marker';
+
+    // create the marker
+    new mapboxgl.Marker(el)
+        .setLngLat(monument)
+        .setPopup(popup) // sets a popup on this marker
+        .addTo(map);
   },
   created: function() {
     // axios.get('http://localhost:3000/places').then(function(response) {

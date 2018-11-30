@@ -38,7 +38,12 @@ export default {
     return {
       message: " to Vue.js!",
       places: [],
-      newPlace: {name: "something", address: "4567890"}
+      newPlace: {name: "something", address: "4567890"},
+      buildings: [
+      { lng: -87.6322, lat: 41.8780, text: "Chicago Board of Trade"},
+      { lng: -87.6237, lat: 41.8904, text: "Tribune Tower"},
+      { lng: -87.6359, lat: 41.8789, text: "Sears Tower"}
+    ]
     };
   },
   mounted: function() {
@@ -52,18 +57,27 @@ export default {
 
     });
 
-    var popup = new mapboxgl.Popup({ offset: 25 })
-    .setText('Construction on the Washington Monument began in 1848.');
+    // var buildings = [[-87.6322, 41.8780, "Chicago Board of Trade"], [-87.6237, 41.8904, "Tribune Tower"], [-87.6359, 41.8789, "Sears Tower"]]
 
-    // create DOM element for the marker
-    var el = document.createElement('div');
-    el.id = 'marker';
 
-    // create the marker
-    new mapboxgl.Marker(el)
-        .setLngLat(monument)
-        .setPopup(popup) // sets a popup on this marker
-        .addTo(map);
+
+
+    // ||
+    this.buildings.forEach(function(building) {
+      var popup = new mapboxgl.Popup({ offset: 25 })
+      // .setText(building[2]);
+      .setText(building.text);
+
+      // create DOM element for the marker
+
+
+      // create the marker
+      new mapboxgl.Marker()
+          // .setLngLat([building[0], building[1]])
+          .setLngLat([building.lng, building.lat])
+          .setPopup(popup) // sets a popup on this marker
+          .addTo(map);
+    })
   },
   created: function() {
     // axios.get('http://localhost:3000/places').then(function(response) {
